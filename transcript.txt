@@ -1,0 +1,23 @@
+[07:05:51] SWITCH       == Step 1: IRC connect form (fields Switch renders for the platform) ==
+[07:05:51]   form       server           Server default=—
+[07:05:51]   form       port             Port default=6697
+[07:05:51]   form       tls              Tls default=True
+[07:05:51]   form       verify_tls       Verify Tls default=True
+[07:05:51]   form       nickname         Nickname default=—
+[07:05:51]   form       channels         Channels default=None
+[07:05:51]   form       sasl_username    Sasl Username default=None
+[07:05:51]   form       sasl_password    Sasl Password default=None
+[07:05:51]   form       server_password  Server Password default=None
+[07:05:51] SWITCH       submitted form: {"server": "localhost", "port": 6667, "tls": false, "nickname": "switch-bot", "channels": "#ops"}
+[07:05:51] SWITCH       verify_credentials: OK (real TCP connect + IRC registration)
+[07:05:53] SWITCH       == Step 2: two-way messages ==
+[07:05:53] IRC ->       <mykel> claude: can you check the deploy status?
+[07:05:53] SWITCH <-    InboundMessage from mykel in #ops: 'claude: can you check the deploy status?'
+IrcAdapter has no agent presentation resolver: every sender is drawn as an agent under its identifier, people included
+[07:05:53] IRC <-       <switch-bot> claude: Deploy #482 is green on staging. Production rollout is waiting on approval.
+[07:05:53] SWITCH       == Step 3: approval card from IRC (no buttons on IRC, so the card is text, answered by typing) ==
+[07:05:53] IRC <-       <switch-bot> claude: APPROVAL REQUEST #1 | claude wants to run: kubectl rollout restart deploy/api -n prod | Reply !approve 1 or !deny 1
+[07:05:53] IRC ->       <mykel> !approve 1
+[07:05:53] SWITCH <-    InboundCommand !approve args='1' from mykel
+[07:05:53] IRC <-       <switch-bot> claude: Approved by mykel. Running rollout now.
+[07:05:53] SWITCH       demo complete: connect form, two-way chat, approval round-trip all over real IRC
